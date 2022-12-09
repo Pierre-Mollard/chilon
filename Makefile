@@ -11,3 +11,10 @@ libchilon.a:chilon.o
 
 chilon.o:src/chilon.c
 	gcc -c src/chilon.c -o chilon.o
+
+clean:
+	rm *.o
+	rm run
+
+clean-lib:
+	rm libchilon.a
