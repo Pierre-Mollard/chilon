@@ -9,6 +9,8 @@ int main(int argc, char* arv[])
 {
     char * buff = (char*) malloc(64);
 
+    chilon_logo();
+
     for(int i = 0; i < array_size; i++)
     {
         sprintf(buff, "array[%d]=%c \n", i, array[i]);
