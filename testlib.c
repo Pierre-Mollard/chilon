@@ -17,5 +17,15 @@ int main(int argc, char* arv[])
         chilon_print(buff);
     }
 
+    for(int i = 0; i < 60; i++)
+    {
+        printf("\e[%dmTESTING [%d] \e[m \n", i, i);
+    }
+
+    chilon_cprint(YELLOW, RED, BOLD, "this text should be bold red on yellow");
+    printf("\nthis on should be normal \n");
+    printf("this on should be normal \n");
+    printf("this on should be normal \n");
+
     free(buff);
 }

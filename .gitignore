@@ -1,3 +1,4 @@
 *.o
 run
 logo.txt
+.vscode/settings.json
