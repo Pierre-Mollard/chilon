@@ -49,9 +49,13 @@ void chilon_print(const char* chararray);
 /// @brief Print a table in ASCII
 ///        with a specified number of rows ans columns
 /// @param title string table title
-/// @param rows number of rows
-/// @param cols number of columns
-void chilon_draw_table(const char* title, int rows, int cols);
+/// @param rows row labels
+/// @param nb_row number of rows
+/// @param cols column labels
+/// @param nb_col number of columns
+/// @param vals 2D array of values
+/// @param element_size size of an element in values
+void chilon_draw_table(const char *title, char **rows, int nb_row, char **cols, int nb_col, int* vals, int element_size);
 
 
 /// @brief Print text with specified color and effect
