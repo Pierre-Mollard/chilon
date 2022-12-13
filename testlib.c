@@ -47,7 +47,12 @@ int main(int argc, char* arv[])
 
     char *rows3[8] = {"no0", "no1", "no2", "no3", "no4", "no5", "no6", "no7"};
     char *cols3[3] = {"index*0.1", "percentage", "index"};
-    chilon_draw_ctable("Compare addr of float array", rows3, array_size, cols3, 3, arrayf, 16, chilon_iter_FLOAT, &rainbow_palette);
+    chilon_draw_ctable("Compare addr of float array \a", rows3, array_size, cols3, 3, arrayf, 16, chilon_iter_FLOAT, &rainbow_palette);
+
+    chilon_set_cursor_pos(1,1);
+    chilon_print("1");
+    chilon_move_cursor(2, 4);
+    chilon_print("4 away");
 
     free(buff);
 }

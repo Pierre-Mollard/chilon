@@ -64,6 +64,44 @@ void chilon_logo();
 /// @param chararray a const array to print
 void chilon_print(const char* chararray);
 
+/// @brief Clear screen
+/// @param mode 0: clear from cursor to end of screen
+///             1: clear from cursor to begining of screen
+///             2: clear all
+///             3: clear all + scroll buffer
+void chilon_clear_screen(unsigned int mode);
+
+/// @brief Clear line
+/// @param mode 0: clear from cursor to end of line
+///             1: clear from cursor to begining of line
+///             2: clear all the line
+void chilon_clear_line(unsigned int mode);
+
+/// @brief Move the cursor up if 0 up if 1 down if 2 forward if 3 back
+/// @param direction 0: UP 1: DOWN
+///                  2: >  3: <
+/// @param amount amount to move the cursor
+void chilon_move_cursor(unsigned int direction, unsigned int amount);
+
+/// @brief Move the cursor to the begining of the line up or down
+/// @param direction 0 down 1 up
+/// @param amount step lines to move
+void chilon_set_cursor_line(unsigned int direction, unsigned int amount);
+
+/// @brief Set the cursor along the line
+/// @param x x axis along the line
+void chilon_set_cursor_column(int x);
+
+
+/// @brief Scroll up or down by a number of page
+/// @param direction 0: down 1: up
+/// @param nb_page nb of page to scroll
+void chilon_scroll(unsigned int direction, unsigned int nb_page);
+
+/// @brief Set cursor position from top left of the screen
+/// @param x position from left right
+/// @param y position from top down
+void chilon_set_cursor_pos(unsigned int x, unsigned int y);
 
 /// @brief Print a table in ASCII
 ///        with a specified number of rows ans columns
