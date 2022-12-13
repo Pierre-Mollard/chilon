@@ -70,12 +70,12 @@ void chilon_print(const char *chararray)
     printf("%s", chararray);
 }
 
-void chilon_draw_table(const char *title, char **rows, int nb_row, char **cols, int nb_col, int* vals, int element_width)
+void chilon_draw_table(const char *title, char **rows, int nb_row, char **cols, int nb_col, void* vals, int element_width, char* (*iter)(int, int, int, int, char*, void*))
 {
-    chilon_draw_ctable(title, rows, nb_row, cols, nb_col, vals, element_width, &default_palette);
+    chilon_draw_ctable(title, rows, nb_row, cols, nb_col, (void*)vals, element_width, iter, &default_palette);
 }
 
-void chilon_draw_ctable(const char *title, char **rows, int nb_row, char **cols, int nb_col, int* vals, int element_width, color_palette_t *palette)
+void chilon_draw_ctable(const char *title, char **rows, int nb_row, char **cols, int nb_col, void* vals, int element_width, char* (*iter)(int, int, int, int, char*, void*), color_palette_t *palette)
 {
     int max_width_col = element_width;
     int width_garray = (nb_col+1)*(max_width_col+1)+1;
@@ -140,9 +140,8 @@ void chilon_draw_ctable(const char *title, char **rows, int nb_row, char **cols,
         // print values of cols
         for(int x = 0; x < nb_col; x++)
         {
-            int v = *((vals+y*nb_col)+x);
             char temp[max_width_col];
-            sprintf(temp, "%d", v);
+            iter(x, y, nb_col, max_width_col, temp, vals);
             fillarray(label_buffer, max_width_col, temp);
             chilon_pprint(&alter_font_data, label_buffer);
             chilon_pprint(&palette->borders, "|");
