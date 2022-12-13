@@ -3,6 +3,17 @@
 #include <string.h>
 #include <stdlib.h>
 
+/// @brief Default 'color' palette white and black {fg, bg, effect}
+color_palette_t default_palette = {
+    {WHITE, NORMAL, BOLD},       //title
+    {WHITE, NORMAL, BOLD},      //borders
+    {BLACK, WHITE, BOLD},       //name_col
+    {WHITE, NORMAL, BOLD},      //name_row_even
+    {BLACK, WHITE, BOLD},       //name_row_uneven
+    {WHITE, NORMAL, ITALIC},    //data_row_even
+    {BLACK, WHITE, ITALIC}      //data_row_uneven
+};
+
 /// @brief ANSI Escape code from color ID
 /// @param c Color supported from enum
 /// @param bgtype 1 if select background, foreground otherwise
@@ -43,7 +54,7 @@ char* fillarray(char *buffer, int maxwidth, char *value)
     {
         for(int j = strlen(buffer); j < maxwidth; j++)
         {
-            strncat(buffer, " ", sizeof(char));
+            strncat(buffer, " ", sizeof(" "));
         }
     }
     return buffer;
@@ -56,17 +67,18 @@ void chilon_logo()
 
 void chilon_print(const char *chararray)
 {
-    printf(chararray);
+    printf("%s", chararray);
 }
 
-void chilon_draw_table(const char *title, char **rows, int nb_row, char **cols, int nb_col, int* vals, int element_size)
+void chilon_draw_table(const char *title, char **rows, int nb_row, char **cols, int nb_col, int* vals, int element_width)
 {
-    int max_width_col = 8;
+    chilon_draw_ctable(title, rows, nb_row, cols, nb_col, vals, element_width, &default_palette);
+}
+
+void chilon_draw_ctable(const char *title, char **rows, int nb_row, char **cols, int nb_col, int* vals, int element_width, color_palette_t *palette)
+{
+    int max_width_col = element_width;
     int width_garray = (nb_col+1)*(max_width_col+1)+1;
-
-    color_t crow1 = BLUE;
-    color_t crow2 = CYAN;
-
 
     char* buffer = malloc((width_garray+1)*sizeof(char));
     char* label_buffer = malloc(max_width_col*sizeof(char));
@@ -85,41 +97,46 @@ void chilon_draw_table(const char *title, char **rows, int nb_row, char **cols, 
         }
     }
     chilon_print("\n");
-    chilon_cprint(NORMAL, GREEN, BOLD, ".");
-    chilon_cprint(NORMAL, GREEN, BOLD, title);
+    chilon_pprint(&palette->borders, ".");
+    chilon_pprint(&palette->title, title);
     for(int i = strlen(title)+1; i < width_garray-1; i++)
     {
-        chilon_cprint(NORMAL, GREEN, BOLD, "-");
+        chilon_pprint(&palette->borders, "-");
     }
-    chilon_cprint(NORMAL, GREEN, BOLD, ".\n");
+    chilon_pprint(&palette->borders, ".");
+    chilon_print("\n");
     
     // Set columns names
-    chilon_cprint(NORMAL, GREEN, BOLD, "|");
+    chilon_pprint(&palette->borders, "|");
     fillarray(label_buffer, max_width_col, " ");
-    chilon_cprint(GREEN, GREEN, BOLD, label_buffer);
-    chilon_cprint(NORMAL, GREEN, BOLD, "|");
+    chilon_cprint(palette->borders.title_fg, palette->borders.title_fg, palette->borders.title_effect, label_buffer);
+    chilon_pprint(&palette->borders, "|");
     // Set col labels
     for(int i = 0; i < nb_col; i++)
     {
         fillarray(label_buffer, max_width_col, cols[i]);
-        chilon_cprint(CYAN, RED, BOLD, label_buffer);
-        chilon_cprint(NORMAL, GREEN, BOLD, "|");
+        chilon_pprint(&palette->name_col, label_buffer);
+        chilon_pprint(&palette->borders, "|");
     }
     chilon_print("\n");
-    chilon_cprint(NORMAL, GREEN, BOLD, buffer);
+    chilon_pprint(&palette->borders, buffer);
     chilon_print("\n");
 
     for(int y = 0; y < nb_row; y++)
     {
         // print label
-        chilon_cprint(NORMAL, GREEN, BOLD, "|");
-        color_t ccur = crow1;
+        chilon_pprint(&palette->borders, "|");
+        color_font_t alter_font_attr = palette->name_row_uneven;
+        color_font_t alter_font_data = palette->data_row_uneven;
         if(y%2 == 0)
-            ccur = crow2;
+        {
+            alter_font_attr = palette->name_row_even;
+            alter_font_data = palette->data_row_even;
+        }
 
         fillarray(label_buffer, max_width_col, rows[y]);
-        chilon_cprint(ccur, RED, BOLD, label_buffer);
-        chilon_cprint(NORMAL, GREEN, BOLD, "|");
+        chilon_pprint(&alter_font_attr, label_buffer);
+        chilon_pprint(&palette->borders, "|");
         // print values of cols
         for(int x = 0; x < nb_col; x++)
         {
@@ -127,25 +144,33 @@ void chilon_draw_table(const char *title, char **rows, int nb_row, char **cols, 
             char temp[max_width_col];
             sprintf(temp, "%d", v);
             fillarray(label_buffer, max_width_col, temp);
-            chilon_cprint(ccur, RED, ITALIC, label_buffer);
-            chilon_cprint(NORMAL, GREEN, BOLD, "|");
+            chilon_pprint(&alter_font_data, label_buffer);
+            chilon_pprint(&palette->borders, "|");
         }
         chilon_print("\n");
     }
 
-    // Last line
-    chilon_cprint(NORMAL, GREEN, BOLD, "'");
-    for(int i = 1; i < width_garray-1; i++)
+    // Set last delimiter line
+    memset(buffer, 0, width_garray);
+    strcat(buffer, "'");
+    for(int i = 0; i < width_garray-2; i++)
     {
-        chilon_cprint(NORMAL, GREEN, BOLD, "-");
+        strcat(buffer, "-");
     }
-    chilon_cprint(NORMAL, GREEN, BOLD, "'\n");
+    strcat(buffer, "'");
+    chilon_pprint(&palette->borders, buffer);
+    chilon_print("\n");
 
     free(label_buffer);
     free(buffer);
 }
 
-void chilon_cprint(color_t bg, color_t fg, effect_t effect, char *text)
+void chilon_pprint(color_font_t *font, const char *text)
+{
+    chilon_cprint(font->title_bg, font->title_fg, font->title_effect, text);
+}
+
+void chilon_cprint(color_t bg, color_t fg, effect_t effect, const char *text)
 {
     char* fg_color = getcolor(fg, 0);
     char* bg_color = getcolor(bg, 1);
