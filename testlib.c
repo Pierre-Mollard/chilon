@@ -49,10 +49,14 @@ int main(int argc, char* arv[])
     char *cols3[3] = {"index*0.1", "percentage", "index"};
     chilon_draw_ctable("Compare addr of float array \a", rows3, array_size, cols3, 3, arrayf, 16, chilon_iter_FLOAT, &rainbow_palette);
 
-    chilon_set_cursor_pos(1,1);
-    chilon_print("1");
-    chilon_move_cursor(2, 4);
-    chilon_print("4 away");
+    printf("\n== TESTING PRINTS METHODS == \n");
+    chilon_print("Print with chilon_print, nothing else \n");
+    chilon_printf("Print with chilon_printf, with format d=%d, lf=%lf, s=%s, u=%u \n", 42, 12.8, "string", 5);
+    chilon_cprint(YELLOW, GREEN, ITALIC, "Print with chilon_cprint, with colors");
+    chilon_cprint2(&rainbow_palette.name_row_even, "\nPrint with chilon_cprint2, with font");
+    chilon_cprintf(YELLOW, GREEN, ITALIC, "\nPrint with chilon_cprintf, with color & format d=%d, lf=%lf, s=%s, u=%u", 42, 12.8, "string", 5);
+    chilon_cprintf2(&rainbow_palette.name_row_even, "\nPrint with chilon_cprintf, with font & format d=%d, lf=%lf, s=%s, u=%u", 42, 12.8, "string", 5);
+    printf("\n\n");
 
     free(buff);
 }

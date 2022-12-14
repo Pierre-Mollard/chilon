@@ -57,12 +57,38 @@ typedef struct color_palette_
 /// @brief Print the library logo in ASCII art
 void chilon_logo();
 
-
-/// @brief Print a char array to the terminal
-///        Does not support format, used to check 
-///        if the print function is accessible to the library
+/// @brief Print a char array to stdout
+///        Does not support format or color
 /// @param chararray a const array to print
 void chilon_print(const char* chararray);
+
+/// @brief Print a char array to stdout with format
+/// @param format output format
+void chilon_printf(const char* format, ...);
+
+/// @brief Print text with specified color and effect
+/// @param bg background color
+/// @param fg foreground color (text color)
+/// @param effect font effect (underlined, bold, etc.)
+/// @param text text to print
+void chilon_cprint(color_t bg, color_t fg, effect_t effect, const char *text);
+
+/// @brief Print a char array to stdout with color
+/// @param font color and effect (bold, underline, etc.) to apply to output
+/// @param chararray a const array to print
+void chilon_cprint2(color_font_t* font, const char* chararray);
+
+/// @brief Print a char array to stdout with color and format
+/// @param bg background color
+/// @param fg foreground color (text color)
+/// @param effect font effect (underlined, bold, etc.)
+/// @param format output format
+void chilon_cprintf(color_t bg, color_t fg, effect_t effect, const char* format, ...);
+
+/// @brief Print a char array to stdout with color and format
+/// @param font color and format (bold, underline, etc.) to apply to output
+/// @param format output format
+void chilon_cprintf2(color_font_t* font, const char* format, ...);
 
 /// @brief Clear screen
 /// @param mode 0: clear from cursor to end of screen
@@ -129,18 +155,6 @@ void chilon_draw_table(const char *title, char **rows, int nb_row, char **cols, 
 /// @param iter function pointer to browse data
 /// @param palette set of color to decorate the grapical array
 void chilon_draw_ctable(const char *title, char **rows, int nb_row, char **cols, int nb_col, void* vals, int element_width, char* (*iter)(int, int, int, int, char*, void*), color_palette_t *palette);
-
-/// @brief Print text with specified color and effect
-/// @param bg background color
-/// @param fg foreground color (text color)
-/// @param effect font effect (underlined, bold, etc.)
-/// @param text text to print
-void chilon_cprint(color_t bg, color_t fg, effect_t effect, const char *text);
-
-/// @brief Print text with specified color font
-/// @param font font containing bg, fg, effect
-/// @param text text to apply font to and print
-void chilon_pprint(color_font_t *font, const char *text);
 
 /// @brief iterator for graphical array of INTEGERs
 ///        return the char* representation of element x,y in data
