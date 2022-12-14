@@ -8,6 +8,45 @@
 #define __CHILON_HEADERFILE__
 #include <stdio.h>
 
+// MACROS TO USE COLORS FAST
+// useful when using printf and simple string
+// ex : printf(COLOR_BLUE EFFECT_ITALIC"This is blue italic text" COLOR_NORMAL);
+
+// Reset all colors/effects
+#define COLOR_NORMAL "\e[m"
+
+// FG Font colors
+#define COLOR_FG_BLACK "\e[30m"
+#define COLOR_FG_RED "\e[31m"
+#define COLOR_FG_GREEN "\e[32m"
+#define COLOR_FG_YELLOW "\e[33m"
+#define COLOR_FG_BLUE "\e[34m"
+#define COLOR_FG_MAGENTA "\e[35m"
+#define COLOR_FG_CYAN "\e[36m"
+#define COLOR_FG_WHITE "\e[37m"
+
+// BG Background colors
+#define COLOR_BG_BLACK "\e[40m"
+#define COLOR_BG_RED "\e[41m"
+#define COLOR_BG_GREEN "\e[42m"
+#define COLOR_BG_YELLOW "\e[43m"
+#define COLOR_BG_BLUE "\e[44m"
+#define COLOR_BG_MAGENTA "\e[45m"
+#define COLOR_BG_CYAN "\e[46m"
+#define COLOR_BG_WHITE "\e[47m"
+
+// EFFECT Font effects
+#define EFFECT_NORMAL_EFFECT ""
+#define EFFECT_BOLD "\e[1m"
+#define EFFECT_DIM "\e[2m"
+#define EFFECT_ITALIC "\e[3m"
+#define EFFECT_UNDERLINE "\e[4m"
+#define EFFECT_SBLINK "\e[5m"
+#define EFFECT_FBLINK "\e[6m"
+#define EFFECT_HIGHLIGHT "\e[7m"
+#define EFFECT_INVISIBLE "\e[8m"
+#define EFFECT_CROSSED "\e[9m"
+
 /// @brief Available colors in this library
 typedef enum {
     NORMAL = -1,

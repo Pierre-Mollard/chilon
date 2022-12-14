@@ -58,5 +58,7 @@ int main(int argc, char* arv[])
     chilon_cprintf2(&rainbow_palette.name_row_even, "\nPrint with chilon_cprintf, with font & format d=%d, lf=%lf, s=%s, u=%u", 42, 12.8, "string", 5);
     printf("\n\n");
 
+    printf("\n== print using "COLOR_FG_CYAN COLOR_BG_YELLOW"shortcuts"COLOR_NORMAL" == \n");
+
     free(buff);
 }
