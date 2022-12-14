@@ -63,7 +63,13 @@ char* fillarray(char *buffer, int maxwidth, char *value)
 
 void chilon_logo()
 {
-    printf(" __    ____ _     _ _             \n \\ \\  / ___| |__ (_) | ___  _ __  \n  \\ \\| |   | '_ \\| | |/ _ \\| '_ \\ \n   \\ \\ |___| | | | | | (_) | | | |\n    \\_\\____|_| |_|_|_|\\___/|_| |_|\n                                  \n");
+    printf(
+    COLOR_FG_BLUE EFFECT_BOLD" __   "COLOR_FG_CYAN EFFECT_BOLD" ____ "COLOR_FG_BLUE EFFECT_BOLD"_     "COLOR_FG_CYAN EFFECT_BOLD"_ "COLOR_FG_BLUE EFFECT_BOLD"_             \n"COLOR_NORMAL
+    COLOR_FG_BLUE EFFECT_BOLD" \\ \\"COLOR_FG_CYAN EFFECT_BOLD"  / ___"COLOR_FG_BLUE EFFECT_BOLD"| |__ "COLOR_FG_CYAN EFFECT_BOLD"(_) "COLOR_FG_BLUE EFFECT_BOLD"|"COLOR_FG_CYAN EFFECT_BOLD" ___  "COLOR_FG_BLUE EFFECT_BOLD"_ __  \n"COLOR_NORMAL
+    COLOR_FG_BLUE EFFECT_BOLD"  \\ \\"COLOR_FG_CYAN EFFECT_BOLD"| |   "COLOR_FG_BLUE EFFECT_BOLD"| '_ \\"COLOR_FG_CYAN EFFECT_BOLD"| |"COLOR_FG_BLUE EFFECT_BOLD" |"COLOR_FG_CYAN EFFECT_BOLD"/ _ \\"COLOR_FG_BLUE EFFECT_BOLD"| '_ \\ \n"COLOR_NORMAL
+    COLOR_FG_BLUE EFFECT_BOLD"   \\ \\"COLOR_FG_CYAN EFFECT_BOLD" |___"COLOR_FG_BLUE EFFECT_BOLD"| | | "COLOR_FG_CYAN EFFECT_BOLD"| |"COLOR_FG_BLUE EFFECT_BOLD" |"COLOR_FG_CYAN EFFECT_BOLD" (_) "COLOR_FG_BLUE EFFECT_BOLD"| | | |\n"COLOR_NORMAL
+    COLOR_FG_BLUE EFFECT_BOLD"    \\_\\"COLOR_FG_CYAN EFFECT_BOLD"____"COLOR_FG_BLUE EFFECT_BOLD"|_| |_"COLOR_FG_CYAN EFFECT_BOLD"|_|"COLOR_FG_BLUE EFFECT_BOLD"_|"COLOR_FG_CYAN EFFECT_BOLD"\\___/"COLOR_FG_BLUE EFFECT_BOLD"|_| |_|"COLOR_NORMAL EFFECT_SBLINK"  :)\n"COLOR_NORMAL
+    COLOR_FG_BLUE EFFECT_BOLD"                                  \n");
 }
 
 // Internal, used to output to stream with format
@@ -167,7 +173,6 @@ void chilon_draw_ctable(const char *title, char **rows, int nb_row, char **cols,
             strcat(buffer, "-");
         }
     }
-    chilon_print("\n");
     chilon_cprint2(&palette->borders, ".");
     chilon_cprint2(&palette->title, title);
     for(int i = strlen(title)+1; i < width_garray-1; i++)
