@@ -52,9 +52,10 @@ char* fillarray(char *buffer, int maxwidth, char *value)
     strncpy(buffer, value, maxwidth);
     if(strlen(value) < maxwidth)
     {
+        char *empty_space = " ";
         for(int j = strlen(buffer); j < maxwidth; j++)
         {
-            strncat(buffer, " ", sizeof(" "));
+            strncat(buffer, empty_space, sizeof(char));
         }
     }
     return buffer;

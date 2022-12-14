@@ -1,26 +1,28 @@
+CC = gcc
+CFLAGS = -g -Wall
+LIB = -Iinclude -Lbin -lchilon
+SRC = $(wildcard src/*.c)
+OBJ = $(SRC:.c=.o)
+TEST_SRC = test/testlib.c
+TEST_OBJ = $(TEST_SRC:.c=.o)
 TARGET=run
 
-run:testlib.o libchilon.a
-	gcc testlib.o -o run -L . libchilon.a
+run:$(TEST_OBJ) bin/libchilon.a
+	$(CC) $(CFLAGS) $(TEST_OBJ) -o $@ $(LIB)
 
-testlib.o:testlib.c
-	gcc -c testlib.c -o testlib.o
+bin/libchilon.a: $(OBJ)
+	ar rs $@ $(OBJ)
 
-libchilon.a:chilon.o chiloniter.o chiloncursor.o
-	ar rs libchilon.a chilon.o chiloniter.o chiloncursor.o
+%.o:%.c
+	$(CC) $(CFLAGS) -c $< -o $@ $(LIB)
 
-chiloncursor.o:src/chiloncursor.c
-	gcc -c src/chiloncursor.c -o chiloncursor.o
-
-chiloniter.o:src/chiloniter.c
-	gcc -c src/chiloniter.c -o chiloniter.o
-
-chilon.o:src/chilon.c
-	gcc -c src/chilon.c -o chilon.o
+show_lib:libchilon.a
+	ar -t libchilon.a
 
 clean:
-	rm *.o
-	rm run
+	rm $(OBJ) $(TEST_OBJ) run
 
-clean-lib:
-	rm libchilon.a
+clean-lib:clean
+	rm bin/libchilon.a
+
+mrproper:clean-lib
