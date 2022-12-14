@@ -1,6 +1,5 @@
 #include "chilon.h"
 #include <stdlib.h>
-#include <stdio.h>
 
 void chilon_clear_screen(unsigned int mode)
 {

@@ -6,6 +6,7 @@
  */
 #ifndef __CHILON_HEADERFILE__
 #define __CHILON_HEADERFILE__
+#include <stdio.h>
 
 /// @brief Available colors in this library
 typedef enum {
@@ -89,6 +90,20 @@ void chilon_cprintf(color_t bg, color_t fg, effect_t effect, const char* format,
 /// @param font color and format (bold, underline, etc.) to apply to output
 /// @param format output format
 void chilon_cprintf2(color_font_t* font, const char* format, ...);
+
+/// @brief Print a char array to stream with color and format
+/// @param stream output stream
+/// @param bg background color
+/// @param fg foreground color (text color)
+/// @param effect font effect (underlined, bold, etc.)
+/// @param format output format
+void chilon_cfprintf(FILE* stream, color_t bg, color_t fg, effect_t effect, const char* format, ...);
+
+/// @brief Print a char array to stream with color and format
+/// @param stream output stream
+/// @param font color and format (bold, underline, etc.) to apply to output
+/// @param format output format
+void chilon_cfprintf2(FILE* stream, color_font_t* font, const char* format, ...);
 
 /// @brief Clear screen
 /// @param mode 0: clear from cursor to end of screen

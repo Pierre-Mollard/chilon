@@ -1,5 +1,4 @@
 #include "chilon.h"
-#include <stdio.h>
 
 char* chilon_iter_INT(int x, int y, int nb_col, int size_output, char * buffer, void* data)
 {

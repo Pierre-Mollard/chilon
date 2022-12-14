@@ -1,9 +1,7 @@
 #include "chilon.h"
-#include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <stdarg.h>
-
 
 /// @brief Default 'color' palette white and black {fg, bg, effect}
 color_palette_t default_palette = {
@@ -127,6 +125,19 @@ void chilon_cprintf(color_t bg, color_t fg, effect_t effect, const char* format,
 void chilon_cprintf2(color_font_t* font, const char* format, ...)
 {
     chilon_cprintf(font->title_bg, font->title_fg, font->title_effect, format);
+}
+
+void chilon_cfprintf(FILE* stream, color_t bg, color_t fg, effect_t effect, const char* format, ...)
+{
+    va_list arglist;
+    va_start(arglist, format);
+    chilon_printstream(fg, bg, effect, stream, format, arglist);
+    va_end(arglist);
+}
+
+void chilon_cfprintf2(FILE* stream, color_font_t* font, const char* format, ...)
+{
+    chilon_cfprintf(stream, font->title_bg, font->title_fg, font->title_effect, format);
 }
 
 void chilon_draw_table(const char *title, char **rows, int nb_row, char **cols, int nb_col, void* vals, int element_width, char* (*iter)(int, int, int, int, char*, void*))
