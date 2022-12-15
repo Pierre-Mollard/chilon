@@ -49,14 +49,19 @@ char *geteffect(effect_t e)
 char* fillarray(char *buffer, int maxwidth, char *value)
 {
     memset(buffer, 0, maxwidth);
-    strncpy(buffer, value, maxwidth);
+    
     if(strlen(value) < maxwidth)
     {
+        strncpy(buffer, value, maxwidth);
         char *empty_space = " ";
         for(int j = strlen(buffer); j < maxwidth; j++)
         {
             strncat(buffer, empty_space, sizeof(char));
         }
+        strncat(buffer, "\0", sizeof(char));
+    }else{
+        strncpy(buffer, value, maxwidth);
+        strncat(buffer, "\0", sizeof(char));
     }
     return buffer;
 }
@@ -226,6 +231,71 @@ void chilon_draw_ctable(const char *title, char **rows, int nb_row, char **cols,
     }
 
     // Set last delimiter line
+    memset(buffer, 0, width_garray);
+    strcat(buffer, "'");
+    for(int i = 0; i < width_garray-2; i++)
+    {
+        strcat(buffer, "-");
+    }
+    strcat(buffer, "'");
+    chilon_cprint2(&palette->borders, buffer);
+    chilon_print("\n");
+
+    free(label_buffer);
+    free(buffer);
+}
+
+void chilon_draw_ccol(const char *title, int nb_row, void* vals, int element_width, char* (*iter)(int, int, int, int, char*, void*), color_palette_t *palette)
+{
+    int width_garray = element_width+2;
+
+    char* buffer = malloc((width_garray+1)*sizeof(char));
+    char* label_buffer = malloc((element_width+1)*sizeof(char));
+    memset(label_buffer, 0, element_width+1);
+
+    // Set first delimiter line
+    memset(buffer, 0, width_garray);
+    strcat(buffer, ".");
+    for(int i = 0; i < element_width; i++)
+    {
+        strcat(buffer, "-");
+    }
+    strcat(buffer, ".");
+    chilon_cprint2(&palette->borders, buffer);
+    chilon_print("\n");
+
+    chilon_cprint2(&palette->borders, "|");
+    fillarray(label_buffer, element_width, title);
+    chilon_cprint2(&palette->name_col, label_buffer);
+    chilon_cprint2(&palette->borders, "|");
+    chilon_print("\n");
+
+    memset(buffer, 0, width_garray);
+    strcat(buffer, "|");
+    for(int i = 0; i < width_garray-2; i++)
+    {
+        strcat(buffer, "-");
+    }
+    strcat(buffer, "|");
+    chilon_cprint2(&palette->borders, buffer);
+    chilon_print("\n");
+
+    for(int i = 0; i < nb_row; i++)
+    {
+        color_font_t alter_font_data = palette->data_row_uneven;
+        if(i%2 == 0)
+        {
+            alter_font_data = palette->data_row_even;
+        }
+
+        memset(label_buffer, 0, width_garray);
+        chilon_cprint2(&palette->borders, "|");
+        char temp[element_width];
+        fillarray(label_buffer, element_width, iter(i, 0, 0, element_width, temp, vals));
+        chilon_cprint2(&alter_font_data, label_buffer);
+        chilon_cprint2(&palette->borders, "|");
+        chilon_print("\n");
+    }
     memset(buffer, 0, width_garray);
     strcat(buffer, "'");
     for(int i = 0; i < width_garray-2; i++)

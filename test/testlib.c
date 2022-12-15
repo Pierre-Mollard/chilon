@@ -60,5 +60,17 @@ int main(int argc, char* arv[])
 
     printf("\n== print using "COLOR_FG_CYAN COLOR_BG_YELLOW"shortcuts"COLOR_NORMAL" == \n");
 
+    long col[3] = {4l, 6l, 8l};
+    int offsetY = 3 + 4;
+    for(int co = 0; co < 10; co++)
+    {
+        chilon_draw_ccol("Test col", 3, col, 4, chilon_iter_LONG, &rainbow_palette);
+        
+        chilon_move_cursor(0, offsetY);
+    }
+    chilon_move_cursor(1, offsetY);
+    chilon_set_cursor_line(0,1);
+    printf("end\n");
+
     free(buff);
 }

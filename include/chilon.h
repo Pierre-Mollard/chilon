@@ -210,6 +210,16 @@ void chilon_draw_table(const char *title, char **rows, int nb_row, char **cols, 
 /// @param palette set of color to decorate the grapical array
 void chilon_draw_ctable(const char *title, char **rows, int nb_row, char **cols, int nb_col, void* vals, int element_width, char* (*iter)(int, int, int, int, char*, void*), color_palette_t *palette);
 
+
+/// @brief Print one column in ASCII and colors
+/// @param title string column table
+/// @param nb_row number of rows
+/// @param vals data array to display
+/// @param element_width width of a cell
+/// @param iter function pointer to browse data
+/// @param palette set of color to decorate the grapical array
+void chilon_draw_ccol(const char *title, int nb_row, void* vals, int element_width, char* (*iter)(int, int, int, int, char*, void*), color_palette_t *palette);
+
 /// @brief iterator for graphical array of INTEGERs
 ///        return the char* representation of element x,y in data
 ///        with length of size_output in the buffer
