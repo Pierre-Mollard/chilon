@@ -157,7 +157,7 @@ void chilon_clear_screen(unsigned int mode);
 ///             2: clear all the line
 void chilon_clear_line(unsigned int mode);
 
-/// @brief Move the cursor up if 0 up if 1 down if 2 forward if 3 back
+/// @brief Move the cursor to 0 up, 1 down, 2 forward, 3 back if inside the edge of terminal
 /// @param direction 0: UP 1: DOWN
 ///                  2: >  3: <
 /// @param amount amount to move the cursor
@@ -212,13 +212,22 @@ void chilon_draw_ctable(const char *title, char **rows, int nb_row, char **cols,
 
 
 /// @brief Print one column in ASCII and colors
-/// @param title string column table
-/// @param nb_row number of rows
+/// @param title string column title
+/// @param nb_row number of rows (cells)
 /// @param vals data array to display
 /// @param element_width width of a cell
 /// @param iter function pointer to browse data
 /// @param palette set of color to decorate the grapical array
 void chilon_draw_ccol(const char *title, int nb_row, void* vals, int element_width, char* (*iter)(int, int, int, int, char*, void*), color_palette_t *palette);
+
+/// @brief Print one row in ASCII and colors
+/// @param title string row title
+/// @param nb_col number of cols (cells)
+/// @param vals data array to display
+/// @param element_width width of a cell
+/// @param iter function pointer to browse data
+/// @param palette set of color to decorate the grapical array
+void chilon_draw_crow(const char *title, int nb_col, void* vals, int element_width, char* (*iter)(int, int, int, int, char*, void*), color_palette_t *palette);
 
 /// @brief iterator for graphical array of INTEGERs
 ///        return the char* representation of element x,y in data

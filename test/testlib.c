@@ -62,14 +62,13 @@ int main(int argc, char* arv[])
 
     long col[3] = {4l, 6l, 8l};
     int offsetY = 3 + 4;
-    for(int co = 0; co < 10; co++)
+    for(int co = 0; co < 1; co++)
     {
         chilon_draw_ccol("Test col", 3, col, 4, chilon_iter_LONG, &rainbow_palette);
-        
-        chilon_move_cursor(0, offsetY);
     }
-    chilon_move_cursor(1, offsetY);
-    chilon_set_cursor_line(0,1);
+
+    printf("\n");
+    chilon_draw_crow("Test row", 3, col, 4, chilon_iter_LONG, &rainbow_palette);
     printf("end\n");
 
     free(buff);

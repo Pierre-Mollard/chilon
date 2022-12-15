@@ -7,11 +7,10 @@ Chilon
   \ \| |   | '_ \| | |/ _ \| '_ \ 
    \ \ |___| | | | | | (_) | | | |
     \_\____|_| |_|_|_|\___/|_| |_|
-
-*/                                                                                                          
+*/                                               
 ```
 
-easily draw graphical array in the console with text format and colors
+Easily draw graphical array in the console with text format and colors
 
 Uses :
 ------
@@ -102,5 +101,16 @@ see [Wikipedia article about ANSI espace colors code](http://en.wikipedia.org/wi
 see [Wikipedia article about SGR code](https://en.wikipedia.org/wiki/ANSI_escape_code#SGR) for more details
 
 chilon provides : 
-- cprintf : printf with color / effects
+- cprint : print with color / effects
+- cprintf : formatted version of cprint
+- cprint2 / cprintf2 : use struct to reduce arg number
+- cfprintf / cfprintf2 : print into a specified stream
 - draw_ctable : print graphical 2D array with color / effects
+- draw_ccol : print 1D array vertically
+- draw_crow : print 1D array horizontally 
+- cursor access for better control
+  
+todo :
+- Add color gradient/change from value
+- Add catching exceptions
+- Fix print with cursor
