@@ -7,6 +7,8 @@ TEST_SRC = test/testlib.c
 TEST_OBJ = $(TEST_SRC:.c=.o)
 TARGET=run
 
+all:run
+
 run:$(TEST_OBJ) bin/libchilon.a
 	$(CC) $(CFLAGS) $(TEST_OBJ) -o $@ $(LIB)
 

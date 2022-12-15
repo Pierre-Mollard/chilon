@@ -21,17 +21,17 @@ color_palette_t default_palette = {
 char *getcolor(color_t c, int bgtype)
 {
     int size = sizeof(char) * 8;
-    char *str = malloc(size);
-    memset(str, 0, size);
+    char *temp = malloc(size);
+    memset(temp, 0, size);
     if (c != NORMAL)
     {
-        snprintf(str, size, (bgtype ? "\e[4%dm" : "\e[3%dm"), (int)c);
+        snprintf(temp, size, (bgtype ? "\e[4%dm" : "\e[3%dm"), (int)c);
     }
     else
     {
-        snprintf(str, size, "\e[m");
+        snprintf(temp, size, "\e[m");
     }
-    return str;
+    return temp;
 }
 
 /// @brief ANSI Escape code from effect ID
@@ -40,10 +40,10 @@ char *getcolor(color_t c, int bgtype)
 char *geteffect(effect_t e)
 {
     int size = sizeof(char) * 8;
-    char *str = malloc(size);
-    memset(str, 0, size);
-    snprintf(str, size, "\e[%dm", (int)e);
-    return str;
+    char *temp = malloc(size);
+    memset(temp, 0, size);
+    snprintf(temp, size, "\e[%dm", (int)e);
+    return temp;
 }
 
 char* fillarray(char *buffer, int maxwidth, char *value)
@@ -58,10 +58,8 @@ char* fillarray(char *buffer, int maxwidth, char *value)
         {
             strncat(buffer, empty_space, sizeof(char));
         }
-        strncat(buffer, "\0", sizeof(char));
     }else{
         strncpy(buffer, value, maxwidth);
-        strncat(buffer, "\0", sizeof(char));
     }
     return buffer;
 }
@@ -275,7 +273,7 @@ void chilon_draw_ccol(const char *title, int nb_row, void* vals, int element_wid
     chilon_print("\n");
 
     chilon_cprint2(&palette->borders, "|");
-    fillarray(label_buffer, element_width, title);
+    fillarray(label_buffer, element_width, (char*)title);
     chilon_cprint2(&palette->name_col, label_buffer);
     chilon_cprint2(&palette->borders, "|");
     chilon_print("\n");
@@ -342,7 +340,7 @@ void chilon_draw_crow(const char *title, int nb_col, void* vals, int element_wid
     //Title
     memset(buffer, 0, width_garray);
     chilon_cprint2(&palette->borders, "|");
-    fillarray(buffer, width_garray-1, title);
+    fillarray(buffer, width_garray-1, (char *)title);
     chilon_cprint2(&palette->name_col, buffer);
     chilon_cprint2(&palette->borders, "|");
     chilon_print("\n");
@@ -362,16 +360,16 @@ void chilon_draw_crow(const char *title, int nb_col, void* vals, int element_wid
     chilon_cprint2(&palette->borders, "|");
     for(int i = 0; i < nb_col; i++)
     {
-        color_font_t alter_font_data = palette->data_row_uneven;
+        color_font_t *alter_font_data = &palette->data_row_uneven;
         if(i%2 == 0)
         {
-            alter_font_data = palette->data_row_even;
+            *alter_font_data = palette->data_row_even;
         }
 
-        memset(label_buffer, 0, width_garray);
+        memset(label_buffer, 0, element_width);
         char temp[element_width];
         fillarray(label_buffer, element_width, iter(i, 0, 0, element_width, temp, vals));
-        chilon_cprint2(&alter_font_data, label_buffer);
+        chilon_cprint2(alter_font_data, label_buffer);
         chilon_cprint2(&palette->borders, "|");
     }
     chilon_print("\n");
@@ -386,4 +384,7 @@ void chilon_draw_crow(const char *title, int nb_col, void* vals, int element_wid
     strcat(buffer, "'");
     chilon_cprint2(&palette->borders, buffer);
     chilon_print("\n");
+
+    free(label_buffer);
+    free(buffer);
 }

@@ -69,6 +69,14 @@ int main(int argc, char* arv[])
 
     printf("\n");
     chilon_draw_crow("Test row", 3, col, 4, chilon_iter_LONG, &rainbow_palette);
+
+    
+    int valuei[16];
+    for(int i = 0; i < 16; i++)
+    {
+        valuei[i] = i;
+    }
+    chilon_draw_crow("Test row I", 16, valuei, 5, chilon_iter_INT, &rainbow_palette);
     printf("end\n");
 
     free(buff);
