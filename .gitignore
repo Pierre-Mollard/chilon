@@ -1,6 +1,6 @@
 *.o
 run
 logo.txt
-.vscode/settings.json
 TODO
-.vscode/launch.json
+.vscode/*
+python/__pycache__/*
