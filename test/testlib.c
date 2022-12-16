@@ -13,6 +13,20 @@ color_palette_t rainbow_palette = {
     {RED, WHITE, ITALIC}      //data_row_uneven
 };
 
+typedef struct teststruct_ {
+    int index;
+    float value;
+    long lvalue;
+    char *text;
+} teststruct_t;
+
+char* iter_TEST_STRUCT(int x, int y, int nb_col, int size_output, char * buffer, void* data)
+{
+    teststruct_t *v = (((teststruct_t*)data+y*nb_col)+x);
+    snprintf(buffer, size_output, "%s %f", v->text, v->value);
+    return buffer;
+}
+
 int main(int argc, char* arv[])
 {
     char * buff = (char*) malloc(64);
@@ -61,7 +75,6 @@ int main(int argc, char* arv[])
     printf("\n== print using "COLOR_FG_CYAN COLOR_BG_YELLOW"shortcuts"COLOR_NORMAL" == \n");
 
     long col[3] = {4l, 6l, 8l};
-    int offsetY = 3 + 4;
     for(int co = 0; co < 1; co++)
     {
         chilon_draw_ccol("Test col", 3, col, 4, chilon_iter_LONG, &rainbow_palette);
@@ -70,13 +83,31 @@ int main(int argc, char* arv[])
     printf("\n");
     chilon_draw_crow("Test row", 3, col, 4, chilon_iter_LONG, &rainbow_palette);
 
-    
-    int valuei[16];
-    for(int i = 0; i < 16; i++)
+    teststruct_t teststruct_array[5] = {
+        {0, 2.4f, 50l, "test1:"},
+        {1, 40.45f, 100l, "test2:"},
+        {2, 200.1f, 150l, "test3:"},
+        {3, 2.0f, 200l, "test4:"},
+        {4, -45.4f, 250l, "test5:"}};
+
+    int testint[5] = {0, 1, 2, 3, 4};
+    while (1)
     {
-        valuei[i] = i;
+        int i = 1000000;
+        while (i)
+        {
+            i--;
+        }
+        chilon_clear_screen(2);
+        
+        for(int i =0; i<5; i++)
+        {
+            teststruct_array[i].value += 0.1f;
+        }
+        chilon_draw_crow("Test struct", 5, teststruct_array, 15, iter_TEST_STRUCT, &rainbow_palette);
+        fflush(stdout);
     }
-    chilon_draw_crow("Test row I", 16, valuei, 5, chilon_iter_INT, &rainbow_palette);
+    
     printf("end\n");
 
     free(buff);
