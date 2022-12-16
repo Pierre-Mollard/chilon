@@ -66,6 +66,11 @@ make # Build the test target (run) and the lib (libchilon.a)
 make clean # Clean the objects file
 ```
 
+The make dyn rule allows you to compile a dynamic library
+``` bash
+make dyn # Build the lib (libchilon.so)
+```
+
 Remove the executable and the library :
 ``` bash
 make clean-lib

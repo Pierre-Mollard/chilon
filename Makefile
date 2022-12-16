@@ -9,6 +9,10 @@ TARGET=run
 
 all:run
 
+dyn: $(SRC)
+	$(CC) $(CFLAGS) -fpic -c $(SRC) $(LIB)
+	$(CC) -shared -o bin/libchilon.so $(wildcard *.o)
+
 run:$(TEST_OBJ) bin/libchilon.a
 	$(CC) $(CFLAGS) $(TEST_OBJ) -o $@ $(LIB)
 
@@ -22,7 +26,7 @@ show_lib:libchilon.a
 	ar -t libchilon.a
 
 clean:
-	rm $(OBJ) $(TEST_OBJ) run
+	rm $(OBJ) $(TEST_OBJ) run $(wildcard *.o)
 
 clean-lib:clean
 	rm bin/libchilon.a
