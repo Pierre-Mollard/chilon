@@ -320,35 +320,36 @@ void chilon_draw_ccol(const char *title, int nb_row, void* vals, int element_wid
 
 void chilon_draw_crow(const char *title, int nb_col, void* vals, int element_width, char* (*iter)(int, int, int, int, char*, void*), color_palette_t *palette)
 {
-    int width_garray = (element_width+1)*nb_col;
+    int width_garray = (element_width+1)*nb_col+1;
 
     char* buffer = malloc((width_garray+1)*sizeof(char));
     char* label_buffer = malloc((element_width+1)*sizeof(char));
+    memset(buffer, 0, width_garray+1);
     memset(label_buffer, 0, element_width+1);
-    memset(buffer, 0, width_garray);
 
     //First delimiter
     strcat(buffer, ".");
-    for(int i = 0; i < width_garray-1; i++)
+    for(int i = 0; i < width_garray-2; i++)
     {
         strcat(buffer, "-");
     }
+    
     strcat(buffer, ".");
     chilon_cprint2(&palette->borders, buffer);
     chilon_print("\n");
 
     //Title
-    memset(buffer, 0, width_garray);
+    memset(buffer, 0, width_garray+1);
     chilon_cprint2(&palette->borders, "|");
-    fillarray(buffer, width_garray-1, (char *)title);
+    fillarray(buffer, width_garray-2, (char *)title);
     chilon_cprint2(&palette->name_col, buffer);
     chilon_cprint2(&palette->borders, "|");
     chilon_print("\n");
 
     //Second delimiter
-    memset(buffer, 0, width_garray);
+    memset(buffer, 0, width_garray+1);
     strcat(buffer, "|");
-    for(int i = 0; i < width_garray-1; i++)
+    for(int i = 0; i < width_garray-2; i++)
     {
         strcat(buffer, "-");
     }
@@ -375,9 +376,9 @@ void chilon_draw_crow(const char *title, int nb_col, void* vals, int element_wid
     chilon_print("\n");
 
     //Last delimiter
-    memset(buffer, 0, width_garray);
+    memset(buffer, 0, width_garray+1);
     strcat(buffer, "'");
-    for(int i = 0; i < width_garray-1; i++)
+    for(int i = 0; i < width_garray-2; i++)
     {
         strcat(buffer, "-");
     }
