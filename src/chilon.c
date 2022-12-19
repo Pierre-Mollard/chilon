@@ -170,6 +170,18 @@ void chilon_draw_ctable(const char *title, char **rows, int nb_row, char **cols,
     int max_width_col = element_width;
     int width_garray = (nb_col+1)*(max_width_col+1)+1;
 
+    if(element_width <= 1)
+    {
+        fprintf(stderr, "error, cannot print a garray element size equal or smaller than 1 char\n");
+        return;
+    }
+
+    if(nb_row <= 0 || nb_col <= 0)
+    {
+        fprintf(stderr, "error, cannot print a garray with less than 1 row or column\n");
+        return;
+    }
+
     char* buffer = malloc((width_garray+1)*sizeof(char));
     char* label_buffer = malloc((max_width_col+1)*sizeof(char));
 
@@ -257,6 +269,18 @@ void chilon_draw_ccol(const char *title, int nb_row, void* vals, int element_wid
 {
     int width_garray = element_width+2;
 
+    if(element_width <= 1)
+    {
+        fprintf(stderr, "error, cannot print a garray element size equal or smaller than 1 char\n");
+        return;
+    }
+
+    if(nb_row <= 0)
+    {
+        fprintf(stderr, "error, cannot print a garray with less than 1 row\n");
+        return;
+    }
+
     char* buffer = malloc((width_garray+1)*sizeof(char));
     char* label_buffer = malloc((element_width+1)*sizeof(char));
     memset(label_buffer, 0, element_width+1);
@@ -321,6 +345,18 @@ void chilon_draw_ccol(const char *title, int nb_row, void* vals, int element_wid
 void chilon_draw_crow(const char *title, int nb_col, void* vals, int element_width, char* (*iter)(int, int, int, int, char*, void*), color_palette_t *palette)
 {
     int width_garray = (element_width+1)*nb_col+1;
+
+    if(element_width <= 1)
+    {
+        fprintf(stderr, "error, cannot print a garray element size equal or smaller than 1 char\n");
+        return;
+    }
+
+    if(nb_col <= 0)
+    {
+        fprintf(stderr, "error, cannot print a garray with less than 1 column\n");
+        return;
+    }
 
     char* buffer = malloc((width_garray+1)*sizeof(char));
     char* label_buffer = malloc((element_width+1)*sizeof(char));

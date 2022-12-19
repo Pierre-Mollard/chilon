@@ -29,6 +29,6 @@ clean:
 	rm $(OBJ) $(TEST_OBJ) run $(wildcard *.o)
 
 clean-lib:clean
-	rm bin/libchilon.a
+	rm bin/*
 
 mrproper:clean-lib
