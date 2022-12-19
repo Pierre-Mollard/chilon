@@ -79,9 +79,9 @@ static inline void draw_border_topline(color_font_t * color, color_font_t * colo
     chilon_cprint2(color, ".");
     if(strlen(title) >= width-2)
     {
-        char *temp = malloc(strlen(title)+2);
-        strncpy(temp, title, width-3);
-        strcat(temp, ".\0");
+        char *temp = malloc(width);
+        strncpy(temp, title, width-2);
+        temp[width-2] = '\0';
         chilon_cprint2(color_text, temp);
         free(temp);
     }
