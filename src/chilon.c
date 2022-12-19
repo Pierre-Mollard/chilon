@@ -171,7 +171,7 @@ void chilon_draw_ctable(const char *title, char **rows, int nb_row, char **cols,
     int width_garray = (nb_col+1)*(max_width_col+1)+1;
 
     char* buffer = malloc((width_garray+1)*sizeof(char));
-    char* label_buffer = malloc(max_width_col*sizeof(char));
+    char* label_buffer = malloc((max_width_col+1)*sizeof(char));
 
     // Set first delimiter line
     memset(buffer, 0, width_garray);
